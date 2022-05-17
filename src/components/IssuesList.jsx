@@ -83,22 +83,26 @@ export default function IssuesList({ labels, status }) {
               ) : issuesQuery.isError ? <p>{issuesQuery.error.message}</p>
                 : (
                 <>
-                  <p>{searchQuery.data.count} Results</p>
-                  <ul className="issues-list">
-                    {searchQuery.data.items.map((issue) => (
-                      <IssueItem
-                        key={issue.id}
-                        title={issue.title}
-                        number={issue.number}
-                        assignee={issue.assignee}
-                        commentCount={issue.comments.length}
-                        createdBy={issue.createdBy}
-                        createdDate={issue.createdDate}
-                        labels={issue.labels}
-                        status={issue.status}
-                      />
-                    ))}
-                  </ul>
+                  {issuesQuery.isSuccess && (
+                    <>
+                      <p>{searchQuery.data?.items.count} Results</p>
+                      <ul className="issues-list">
+                        {searchQuery.data.items.map((issue) => (
+                          <IssueItem
+                            key={issue.id}
+                            title={issue.title}
+                            number={issue.number}
+                            assignee={issue.assignee}
+                            commentCount={issue.comments.length}
+                            createdBy={issue.createdBy}
+                            createdDate={issue.createdDate}
+                            labels={issue.labels}
+                            status={issue.status}
+                          />
+                        ))}
+                      </ul>
+                    </>
+                  )}
                 </>
               )
             }
