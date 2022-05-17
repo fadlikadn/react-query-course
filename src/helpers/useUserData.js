@@ -3,14 +3,14 @@ import { useQuery } from "react-query";
 const useUserData = (userId) => {
   const usersData = useQuery(
     ["users", userId],
-    async () => {
+    async ({ signal }) => {
       if (!userId) {
         console.log(userId);
         // await new Promise((resolve) => setTimeout(() => {
         //   resolve();
         // }, 200));
       }
-      return fetch(`/api/users/${userId}`).then(res => res.json())
+      return fetch(`/api/users/${userId}`, { signal }).then(res => res.json())
     },
     {
       staleTime: 1000 * 60 * 5,
