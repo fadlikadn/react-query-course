@@ -58,5 +58,5 @@ export const possibleStatus = [
   { id: "todo", label: "Todo" },
   { id: "inProgress", label: "In Progress" },
   { id: "done", label: "Done" },
-  { id: "cancelled", label: "Cancelled" },
+  { id: "cancel", label: "Cancel" },
 ];

@@ -3,6 +3,7 @@ import IssueHeader from "./IssueHeader";
 import useIssueData from "../helpers/useIssueData";
 import useIssueComments from "../helpers/useIssueComments";
 import Comment from "./Comment";
+import IssueStatus from "./IssueStatus";
 
 export default function IssueDetails() {
   const { number } = useParams();
@@ -22,6 +23,10 @@ export default function IssueDetails() {
             ))}
           </section>
           <aside>
+            <IssueStatus
+              status={issueQuery.data.status}
+              issueNumber={issueQuery.data.number.toString()}
+            />
           </aside>
         </main>
       </>}

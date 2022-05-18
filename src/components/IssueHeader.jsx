@@ -26,7 +26,7 @@ const IssueHeader = ({
           ) : (
             <GoIssueOpened />
           )}
-          {statusObject.label}
+          {statusObject ? statusObject.label : ""}
         </span>
         <span className="created-by">
           {createdUser.isLoading ? "..." : createdUser.data?.name}
