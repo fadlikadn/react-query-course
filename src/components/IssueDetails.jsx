@@ -6,11 +6,15 @@ import Comment from "./Comment";
 import IssueStatus from "./IssueStatus";
 import IssueAssignment from "./IssueAssignment";
 import IssueLabels from "./IssueLabels";
+import useScrollToBottomAction from "../helpers/useScrollToBottomAction";
+import Loader from "./Loader";
 
 export default function IssueDetails() {
   const { number } = useParams();
   const issueQuery = useIssueData(number);
   const commentsQuery = useIssueComments(number);
+
+  useScrollToBottomAction(document, commentsQuery.fetchNextPage, 100);
 
   return (
     <div className="issue-details">
@@ -20,9 +24,12 @@ export default function IssueDetails() {
         <main>
           <section>
             {commentsQuery.isLoading && <p>Loading...</p>}
-            {commentsQuery.isSuccess && commentsQuery.data?.map((comment) => (
-              <Comment key={comment.id} {...comment} />
-            ))}
+            {!commentsQuery.isLoading && commentsQuery.data?.pages.map((commentPage) =>
+              commentPage.map((comment) => (
+                <Comment key={comment.id} {...comment} />
+              ))
+            )}
+            {commentsQuery.isFetchingNextPage && <Loader />}
           </section>
           <aside>
             <IssueStatus

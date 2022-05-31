@@ -1,10 +1,15 @@
-import {useQuery} from "react-query";
+import { useInfiniteQuery } from "react-query";
 
 const useIssueComments = (issueNumber) => {
-  return useQuery(
+  return useInfiniteQuery(
     ["issues", issueNumber, "comments"],
-    ({ signal }) => {
-      return fetch(`/api/issues/${issueNumber}/comments`, { signal }).then(res => res.json());
+    ({ signal, pageParam = 1 }) => {
+      return fetch(`/api/issues/${issueNumber}/comments?page=${pageParam}`, { signal }).then(res => res.json());
+    }, {
+      getNextPageParam: (lastPage, pages) => {
+        if (lastPage.length === 0) return;
+        return pages.length + 1;
+      },
     });
 }
 
